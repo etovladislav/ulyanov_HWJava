@@ -1,7 +1,6 @@
 package ru.kpfu.itis.repository;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.log4j.Logger;
 import ru.kpfu.itis.model.Comment;
 import ru.kpfu.itis.model.Post;
 import ru.kpfu.itis.repository.connect.DataBaseConnect;
@@ -13,9 +12,9 @@ import java.util.List;
 /**
  * Created by vladislav on 08.11.15.
  */
+
 public class PostRepository {
     private UserRepository userRepository = new UserRepository();
-    private static final Logger log = Logger.getLogger(PostRepository.class);
 
     public List<Post> getAllPosts(String username) {
         Connection connection = DataBaseConnect.getInstance().getConnection();
@@ -81,13 +80,11 @@ public class PostRepository {
             stmt.execute();
             connection.commit();
             stmt.close();
-            log.info("User: " + usernameSend + " added post on page " + username);
         } catch (SQLException e) {
             e.printStackTrace();
             try {
                 if (connection != null) connection.rollback();
             } catch (SQLException e1) {
-                log.error("Error of addition of a post with param" + usernameSend + " " + text);
                 e1.printStackTrace();
             }
         }
@@ -198,7 +195,6 @@ public class PostRepository {
             stmt.execute();
             connection.commit();
             stmt.close();
-            log.info("User: " + username + " added post with text " + text);
         } catch (SQLException e) {
             e.printStackTrace();
             try {
